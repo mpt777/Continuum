@@ -1,0 +1,178 @@
+body::before {
+    content: "";
+    display: block;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -10000;
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(5, 5, 5, .02))), url(backgroundimages/May_Lake.jpg) no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    overflow: hidden;
+}
+.hidden{
+    display: none;
+}
+p {
+    color: var(--darker-grey-text);
+    display: inline-block;
+}
+h1 {
+    color: var(--darker-blue-bar);
+    font-family: "arvo", sans-serif;
+}
+
+h2,
+h3 {
+    font-size: 1.7rem;
+    text-shadow: none;
+}
+
+ul,
+li,
+ol,
+dl,
+a {
+    font-family: "lato", sans-serif;
+    color: #101010;
+    padding: .1em;
+}
+
+dt {
+    padding-bottom: 1em;
+}
+
+nav li {
+    color: #616161;
+}
+
+input, select{
+    margin: 0em 1em 2em 1em;
+        text-align : center;
+}
+
+.resume-box {
+    background-color: #F9F9F9;
+    position: relative;
+    margin: 20em auto;
+    padding: 1.5em;
+    border: 2px solid #616161;
+    max-width: 35em;
+}
+
+form {
+    margin: 0em 0em 2em 0em;
+    padding: 1em;
+    /*border: #111 solid 1px;*/
+}
+
+.segment-container {
+    border-bottom: 2px solid #616161;
+    margin-bottom: 1em;
+    text-align: center;
+}
+
+.segment-container > p {
+    font-size: 1.1em;
+    color: #101010;
+}
+
+h3 {
+    margin: 0;
+}
+
+
+.image-container {
+    text-align: center;
+    margin: 2em 0em 0em 0em;
+}
+
+.image-container > img {
+    object-fit: cover;
+    max-width: 100%;
+    max-height: 30em;
+}
+
+.about {
+    text-align: left;
+}
+li {
+    display: block;
+    position: relative;
+    overflow: hidden;
+}
+
+.submit-button > a {
+    text-decoration: none;
+
+}
+
+.submit-button {
+    margin-top: 2em;
+    padding: .5em 1em .5em 1em;
+    border-radius: 5px;
+}
+
+
+/* Resposive Web Design */
+
+@media screen and (max-width: 790px) {
+    .header-text h1 {
+        line-height: 2.5rem;
+        margin-bottom: 0em;
+        font-size: 2.5em;
+    }
+}
+
+@media screen and (max-width: 450px) {
+
+    .header-text h1 {
+        font-size: 2em;
+        letter-spacing: .1rem;
+    }
+
+    .header-text p {
+        font-size: 1em;
+        letter-spacing: .1rem;
+    }
+
+    main p,
+    main h2 {
+        padding: 0em;
+    }
+
+}
+
+@media screen and (max-width: 600px) {
+
+    h1 {
+        font-size: 2.5em;
+    }
+    .resume-box  {
+        margin: 15em 0.7em 15em .7em;
+
+    }
+    input[type=text], select {
+         grid-column: 1 / span 2;
+        font-size: 1.2em;
+    }
+    select {
+        margin-bottom: 1.2em;
+    }
+    .dec-button,
+    .inc-button
+    {
+        padding: 1em .5em 1em .5em;
+        margin-top: -1em;
+        
+    }
+    
+    .total-button {
+        padding: 1em 1em 1em 1em;
+        margin: 0em 0em 1.5em 0em;
+    }
+}
