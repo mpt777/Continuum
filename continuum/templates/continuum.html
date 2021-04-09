@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Continuum</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet" />
+
+    {% load static %}
+    <link href=/pizookies/pythonprojects/continuum/static/continuum/parallax.css rel="stylesheet" />
+
+    {% load static %}
+    <link href=/pizookies/pythonprojects/continuum/static/continuum/parallax_continuum.css rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=BioRhyme|Space+Mono|Lato|Roboto|Arvo" rel="stylesheet" />
+    <link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js" integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"> </script>
+</head>
+
+<script type='text/javascript'>
+    //Nav hamburger/full bar
+    $(document).ready(function() {
+        $(".fa-bars").click(function() {
+            $("nav").css("width", $("body").css("width"));
+            $("nav").addClass("open");
+        });
+
+        $("nav").click(function() {
+            var off = $("body").css("width") + 50;
+            $("nav").removeClass("open");
+        });
+
+    });
+    //Toggles between admin and user mode
+    function Admin_Mode() {
+        document.getElementById("user-form").classList.add("hidden");
+        document.getElementById("admin-form").classList.remove("hidden");
+    }
+
+    function User_Mode() {
+        document.getElementById("admin-form").classList.add("hidden");
+        document.getElementById("user-form").classList.remove("hidden");
+    }
+
+</script>
+
+{% if anchor %}
+<script type='text/javascript'>
+    $(document).ready(function() {
+        window.location = '#{{ anchor }}'
+    });
+
+</script>
+{% endif %}
+
+{% if models %}
+<script type='text/javascript'>
+    $(document).ready(function() {
+        var select = document.getElementById("modelSelect");
+        var options = `${{models}}`;
+        options = options.replaceAll('&#x27;', '"')
+        options = options.replaceAll('[', '')
+        options = options.replaceAll(']', '')
+        options = options.replaceAll('"', '')
+        options = options.replaceAll('$', '')
+        options = options.replaceAll(' ', '')
+        options = options.split(",")
+
+        for (var i = 0; i < options.length; i++) {
+            var opt = options[i];
+            var el = document.createElement("option");
+            el.textContent = opt;
+            el.value = opt;
+            select.appendChild(el);
+        }
+    });
+
+</script>
+{% endif %}
+
+<body>
+
+    <main>
+        <div class="menu-bar">
+
+            <div class="hamburger"> <i class="fas fa-bars"></i> </div>
+
+        </div>
+
+        <nav>
+            <ul>
+                <a class="button1" href="../parallax.html">
+                    <li class="">Home</li>
+                </a>
+                <a class="button2" href="/masknomask">
+                    <li class="">Mask No Mask</li>
+                </a>
+                <!--<li> <a class="button2" href="/pizookies/otteryoudoing.html">Animals</a></li> -->
+                <a class="button3" href="/game/game.html">
+                    <li>Tato's Adventure</li>
+                </a>
+                <a class="button4 here" href="/pizookies/portfolio.html">
+                    <li class="here">Portfolio</li>
+                </a>
+                <a class="button5" href="/professional/resume.html">
+                    <li class="">Professional</li>
+                </a>
+
+            </ul>
+            <div class="ghost"><i class="fas fa-ghost"></i></div>
+        </nav>
+
+        <div class="resume-box">
+
+            <h1>Project Continuum</h1>
+            <p></p>
+            <br>
+            <p class="about"></p>
+            <p>The site deletes all uploaded files after use :)</p>
+            <br>
+
+            <div id="user-form">
+                <input type="submit" name="admin" value="To Admin" onclick="Admin_Mode()" />
+                <a name="model-results"></a>
+                <form method="post" enctype="multipart/form-data">
+                    <div class="segment-container">
+                        <h3>User Mode</h3>
+                        <p> Select the model you want to run your image on, and then upload your image. If you don't find a model you want to run on, use the admin mode to upload a new model! </p>
+                        {% csrf_token %}
+                    </div>
+                    <div class="segment-container">
+                        <p class="about">Model </p>
+                        <select name="models" id="modelSelect" required>
+                        </select>
+                    </div>
+                    
+                    <div class="segment-container">
+                        <p class="about">Confidence Threshold </p>
+                        <input class="c1" type="text" name="conf" value = "0.25"required>
+                    </div>
+                    <div class="segment-container">
+                        <p class="about">IOU </p>
+                        <input class="c1" type="text" name="iou" value = "0.45" required>
+                    </div>
+
+                    <div class="segment-container">
+                        <p class="about">Image to Classify </p>
+                        <input type="file" name="filename" required accept=".jpg, .zip" />
+                    </div>
+                    <button class="submit-button" type="submit" name="submit"><a>Sumbit</a></button>
+                </form>
+
+                {% if not zip %}
+
+                {% if image %}
+                <h3>Classified Image</h3>
+                <div id="uploaded-image" class="image-container">
+                    <img src="/pizookies/pythonprojects/continuum/media/outputfiles/{{image_name}}.jpg" alt="Uploaded Image">
+                </div>
+                {% endif %}
+
+                {% if json %}
+                <div>
+                    <button class="submit-button"><a href="/pizookies/pythonprojects/continuum/media/json-data/{{image_name}}.json" download>Download JSON</a></button>
+                </div>
+                {% endif %}
+
+                {% endif %}
+
+
+                {% if zip %}
+
+                {% if image %}
+                <h3>Classified Image</h3>
+                <div>
+                    <button class="submit-button"><a href="/pizookies/pythonprojects/continuum/media/outputfiles/{{model}}_images.zip" download>Download Images</a></button>
+                </div>
+                
+                {% endif %}
+
+                {% if json %}
+                <div>
+                    <button class="submit-button"><a href="/pizookies/pythonprojects/continuum/media/json-data/{{model}}_annotations.zip" download>Download JSON</a></button>
+                </div>
+                {% endif %}
+
+                {% endif %}
+
+            </div>
+
+            <div id="admin-form" class="hidden">
+                <input type="submit" name="user" value="To User" onclick="User_Mode()" />
+                <form method="post" enctype="multipart/form-data">
+                    <div class="segment-container">
+                        <h3>Admin Mode</h3>
+                        <p> Use this form to upload new model weights. Please choose a name for the model in the first space below, then upload the weights. Currently, these need to be in a "best.pt" file format </p>
+                    </div>
+                    {% csrf_token %}
+                    <div class="segment-container">
+                        <p class="about">Name of the Model </p>
+                        <input class="c1" type="text" name="modelname" required>
+                    </div>
+
+                    <div class="segment-container">
+                        <p class="about">"best.pt" File </p>
+                        <input type="file" name="modelbest" required>
+                    </div>
+                    <button class="submit-button" type="submit" name="submit"><a>Sumbit</a></button>
+                </form>
+
+                {% if modelname %}
+                <h3>{{modelname}} has been uploaded successfully!</h3>
+
+                <script type='text/javascript'>
+                    window.onload = function() {
+                        Admin_Mode();
+                    };
+
+                </script>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+
+        <div class="footer-container">
+
+            <footer>
+                <p><q>Stop and throw rocks into the river</q>- unknown</p>
+
+                <ul class="social-media">
+                    <li><a class="fab fa-linkedin-in" , href="https://www.linkedin.com/in/marshal-taylor/" target="_blank"></a></li>
+                    <li><a class="fab fa-youtube" , href="https://www.youtube.com/channel/UCFDxxRJdsl6XlsSKfk3HqIw?view_as=subscriber" target="_blank"></a></li>
+                    <li><a class="fab fa-github" , href="https://github.com/mpt777" target="_blank"></a></li>
+                    <li><a class="fas fa-ghost" , href="#"></a></li>
+                </ul>
+            </footer>
+        </div>
+
+    </main>
+
+
+</body>
+
+</html>
