@@ -1,0 +1,16 @@
+name: continuum
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - matplotlib
+  - numpy
+  - numpy-base
+  - pandas
+  - python
+  - scikit-learn
+  - scipy
+  - pip
+  - opencv
+  - tqdm
+  - keras
