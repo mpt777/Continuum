@@ -1,0 +1,5 @@
+train: /Users/mptay/Desktop/bear-den/model-code/Yolov5/cleaned/images/train
+val: /Users/mptay/Desktop/bear-den/model-code/Yolov5/cleaned/images/valid
+
+nc: 3
+names: [animal.deer_mule.fawn, animal.deer_mule.female.adult, animal.deer_mule.male.adult]
